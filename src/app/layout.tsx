@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 const nav = [
   { href: "/next", label: "Next Cup" },
-  { href: "/history", label: "History" },
+  { href: "/#history", label: "History" },
   { href: "/players", label: "Players" },
   { href: "/photos", label: "Photos" },
 ];

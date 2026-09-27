@@ -84,8 +84,10 @@ async function TournamentAdmin({ year, players }: { year: number | null; players
   const onTeam = (team: Team) => (roster ?? []).filter((r) => r.team === team).map((r) => r.players).sort((a, b) => a.name.localeCompare(b.name));
   const nextYear = (all?.[0]?.year ?? new Date().getFullYear()) + 1;
 
+  // key by year: uncontrolled inputs keep their old values across client navigation otherwise,
+  // so switching years and saving would write the previous year's fields.
   return (
-    <div className="space-y-10">
+    <div key={t.year} className="space-y-10">
       <div className="flex flex-wrap items-center gap-2 text-sm">
         {all?.map((x) => (
           <Link key={x.year} href={`/admin?tab=tournament&year=${x.year}`} className={`num px-2 py-1 rounded ring-1 ring-line ${x.year === t.year ? "bg-ink text-paper" : ""}`}>

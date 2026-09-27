@@ -2,14 +2,16 @@ import Link from "next/link";
 import { Countdown } from "@/components/Countdown";
 import { Scoreboard } from "@/components/Scoreboard";
 import { SectionTitle } from "@/components/SectionTitle";
+import { YearCards } from "@/components/YearCards";
 import { createClient } from "@/lib/supabase/server";
 import { formatDates, photoUrl, type Photo, type Tournament } from "@/lib/data";
 
 export default async function Home() {
   const supabase = await createClient();
-  const [{ data: tournaments }, { data: photos }] = await Promise.all([
+  const [{ data: tournaments }, { data: photos }, { data: covers }] = await Promise.all([
     supabase.from("tournaments").select("*").order("year", { ascending: false }).returns<Tournament[]>(),
     supabase.from("photos").select("*").order("created_at", { ascending: false }).limit(8).returns<Photo[]>(),
+    supabase.from("photos").select("year, storage_path").order("created_at"),
   ]);
   const all = tournaments ?? [];
   const thisYear = new Date().getFullYear();
@@ -68,11 +70,20 @@ export default async function Home() {
         <section className="mt-12 grid gap-6 sm:grid-cols-3">
           <Stat label="Arcon Cups" value={wins.arcon} color="text-arcon" />
           <Stat label="838 / ER Cups" value={wins.t2} color="text-blue" />
-          <Link href="/history" className="bg-card ring-1 ring-line rounded p-6 hover:ring-gold">
+          <a href="#history" className="bg-card ring-1 ring-line rounded p-6 hover:ring-gold">
             <div className="font-display num text-5xl text-gold">{unknown}</div>
             <div className="uppercase tracking-[0.2em] text-xs mt-2 text-muted">Years we don&apos;t have results for</div>
             <div className="text-sm mt-3">Remember who won? Help fill in the history →</div>
-          </Link>
+          </a>
+        </section>
+
+        <section className="mt-12">
+          <SectionTitle id="history">Every Cup Since 2001</SectionTitle>
+          <p className="mt-3 text-muted max-w-2xl">
+            Patrick&apos;s records start in 2014. For earlier years, share what you remember and upload old photos so we can fill in
+            the gaps.
+          </p>
+          <YearCards tournaments={all} covers={covers ?? []} />
         </section>
 
         {!!photos?.length && (

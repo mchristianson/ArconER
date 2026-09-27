@@ -41,7 +41,7 @@ export default async function YearPage({ params }: PageProps<"/history/[year]">)
     <div className="mx-auto max-w-6xl px-4 py-10">
       <div className="flex items-center justify-between text-sm">
         <Link href={`/history/${year - 1}`} className="text-muted hover:text-ink">← {year - 1}</Link>
-        <Link href="/history" className="text-muted hover:text-ink">All years</Link>
+        <Link href="/#history" className="text-muted hover:text-ink">All years</Link>
         <Link href={`/history/${year + 1}`} className="text-muted hover:text-ink">{year + 1} →</Link>
       </div>
 
