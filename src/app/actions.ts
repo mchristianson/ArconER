@@ -52,6 +52,19 @@ export async function setRsvp(form: FormData) {
   revalidatePath("/next");
 }
 
+// Admin sets the photo order for a year; index 0 is the year's cover.
+export async function reorderPhotos(year: number, ids: string[]) {
+  const supabase = await createClient();
+  const { data: isAdmin } = await supabase.rpc("is_admin");
+  if (!isAdmin) throw new Error("Admins only");
+  const results = await Promise.all(ids.map((id, sort) => supabase.from("photos").update({ sort }).eq("id", id).eq("year", year)));
+  const failed = results.find((r) => r.error);
+  if (failed?.error) throw new Error(failed.error.message);
+  revalidatePath(`/history/${year}`);
+  revalidatePath("/");
+  revalidatePath("/photos");
+}
+
 export async function deletePhoto(form: FormData) {
   const supabase = await createClient();
   const id = String(form.get("id"));

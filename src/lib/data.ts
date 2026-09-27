@@ -33,7 +33,7 @@ export type Match = {
 
 export type Session = { id: string; label: string; format: string; sort: number; matches: Match[] };
 
-export type Photo = { id: string; year: number; uploaded_by: string; storage_path: string; caption: string | null; taken_at: string | null; width: number | null; height: number | null };
+export type Photo = { id: string; year: number; uploaded_by: string; sort: number | null; storage_path: string; caption: string | null; taken_at: string | null; width: number | null; height: number | null };
 
 export const teamName = (team: Team, t: Pick<Tournament, "team2_name">) => (team === "arcon" ? "Arcon" : t.team2_name);
 

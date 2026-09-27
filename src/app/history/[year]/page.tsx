@@ -28,7 +28,7 @@ export default async function YearPage({ params }: PageProps<"/history/[year]">)
       .eq("year", year)
       .order("sort")
       .returns<Session[]>(),
-    supabase.from("photos").select("*, photo_tags(players(id, name))").eq("year", year).order("taken_at", { nullsFirst: false }).returns<(Photo & { photo_tags: { players: { id: string; name: string } }[] })[]>(),
+    supabase.from("photos").select("*, photo_tags(players(id, name))").eq("year", year).order("sort", { nullsFirst: false }).order("taken_at", { nullsFirst: false }).returns<(Photo & { photo_tags: { players: { id: string; name: string } }[] })[]>(),
     supabase.from("edit_suggestions").select("id, field, proposed_value, status").eq("year", year).eq("status", "open"),
   ]);
   if (!t) notFound();
@@ -132,7 +132,7 @@ export default async function YearPage({ params }: PageProps<"/history/[year]">)
           )}
         </div>
         {photos?.length ? (
-          <PhotoGallery photos={photos} viewerId={profile?.id ?? null} isAdmin={profile?.role === "admin"} />
+          <PhotoGallery photos={photos} viewerId={profile?.id ?? null} isAdmin={profile?.role === "admin"} arrangeYear={profile?.role === "admin" ? year : undefined} />
         ) : (
           <p className="mt-4 text-muted">No photos yet{canPost ? ". Be the first to add one." : ". Sign in to add some."}</p>
         )}

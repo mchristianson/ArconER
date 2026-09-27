@@ -11,7 +11,7 @@ export default async function Home() {
   const [{ data: tournaments }, { data: photos }, { data: covers }] = await Promise.all([
     supabase.from("tournaments").select("*").order("year", { ascending: false }).returns<Tournament[]>(),
     supabase.from("photos").select("*").order("created_at", { ascending: false }).limit(8).returns<Photo[]>(),
-    supabase.from("photos").select("year, storage_path").order("created_at"),
+    supabase.from("photos").select("year, storage_path").order("sort", { nullsFirst: false }).order("taken_at", { nullsFirst: false }),
   ]);
   const all = tournaments ?? [];
   const thisYear = new Date().getFullYear();

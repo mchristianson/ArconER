@@ -9,7 +9,7 @@ export const metadata = { title: "Photos" };
 export default async function Photos({ searchParams }: PageProps<"/photos">) {
   const { year } = await searchParams;
   const { supabase, profile } = await getViewer();
-  let q = supabase.from("photos").select("*, photo_tags(players(id, name))").order("year", { ascending: false }).order("taken_at");
+  let q = supabase.from("photos").select("*, photo_tags(players(id, name))").order("year", { ascending: false }).order("sort", { nullsFirst: false }).order("taken_at", { nullsFirst: false });
   if (year) q = q.eq("year", Number(year));
   const [{ data: photos }, { data: years }] = await Promise.all([
     q.returns<(Photo & { photo_tags: { players: { id: string; name: string } }[] })[]>(),
