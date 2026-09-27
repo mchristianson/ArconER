@@ -186,7 +186,8 @@ language sql stable security definer set search_path = '' as $$
   order by p.created_at desc;
 $$;
 
-revoke execute on function admin_users() from anon;
+revoke execute on function admin_users() from public, anon;
+revoke execute on function handle_new_user() from public, anon, authenticated;
 
 -- Career stats --------------------------------------------------------------
 

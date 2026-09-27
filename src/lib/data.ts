@@ -50,4 +50,9 @@ export function formatDates(t: Pick<Tournament, "start_date" | "end_date">) {
   return `${start}–${end.toLocaleDateString("en-US", sameMonth ? { day: "numeric", timeZone: "UTC" } : opts)}`;
 }
 
-export const pts = (n: number | null) => (n == null ? "–" : Number.isInteger(Number(n)) ? String(Number(n)) : `${Math.floor(Number(n))}½`);
+export function pts(n: number | null) {
+  if (n == null) return "–";
+  const whole = Math.floor(Number(n));
+  if (Number(n) === whole) return String(whole);
+  return `${whole || ""}½`;
+}
