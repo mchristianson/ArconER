@@ -19,6 +19,7 @@ ALIASES = {
     "feldman": "Feldy",
     "nordeen": "Nordo",
     "big pants": "Aaron",
+    "wheaty": "Aaron",
     "leonard": "Tim L",
 }
 
