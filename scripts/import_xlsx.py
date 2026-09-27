@@ -18,6 +18,8 @@ ALIASES = {
     "matt": "Matty Ice",
     "feldman": "Feldy",
     "nordeen": "Nordo",
+    "big pants": "Aaron",
+    "leonard": "Tim L",
 }
 
 FIRST_YEAR = 2001
