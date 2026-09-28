@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Source_Sans_3 } from "next/font/google";
 import Link from "next/link";
-import { Crest } from "@/components/Crest";
 import { AuthButton } from "@/components/AuthButton";
 import { getViewer } from "@/lib/supabase/server";
 import "./globals.css";
@@ -30,7 +29,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <header className="bg-ink text-paper">
           <div className="mx-auto max-w-6xl px-4 flex items-center gap-4 h-16">
             <Link href="/" className="flex items-center gap-2 shrink-0">
-              <Crest className="h-9 w-8" />
+              {/* eslint-disable-next-line @next/next/no-img-element -- ponytail: static asset, Next's image optimizer flattens its transparency */}
+              <img src="/logo-mark.webp" alt="" className="h-9 w-auto" />
               <span className="font-display text-xl tracking-wide">ArconEr Cup</span>
             </Link>
             <nav className="hidden md:flex gap-5 ml-6 text-sm uppercase tracking-[0.12em]">
